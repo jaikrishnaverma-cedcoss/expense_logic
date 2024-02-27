@@ -165,9 +165,7 @@ const calci = (transaction) => {
 
         // normalize logic
         if (result.pending_payments?.[to_from]) {
-          // mai dunga 10
           const user_amount = result.pending_payments?.[from_to];
-          //wo dega 15
           const other_user_amount = result.pending_payments?.[to_from];
           if (user_amount > other_user_amount) {
             result.pending_payments[from_to] =

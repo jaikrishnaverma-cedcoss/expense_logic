@@ -101,6 +101,26 @@ const transaction = [
       },
     ],
   },
+    {
+    id: 29,
+    user_id: 37,
+    amount: "10323",
+    expense_detail: "room",
+    paid: "false",
+    expense_time: "Sun 25-Feb-2024 10:39 AM",
+    each_share: 1,
+    self: 0,
+    created_at: "2024-02-25 10:40:07",
+    collaborators: [
+      {
+        id: "37",
+        name: "jai verma",
+        approved: "true",
+        transaction_type: "Cr",
+        shared_amount: "10323",
+      },
+    ],
+  },
 ];
 
 const calci = (transaction) => {
@@ -123,20 +143,20 @@ const calci = (transaction) => {
       const shared_amount = parseFloat(collab.shared_amount);
        if(result.created_payments?.[`${id}#${name}`]===undefined)
        result.created_payments[`${id}#${name}`]={
-      total_paid:0,
-      spend_on_self:0
+      total_spent:0,
+      spent_on_self:0
       }
       if(!result.contributers.find(item=>item===`${id}#${name}`))
       result.contributers.push(`${id}#${name}`)
       if (transaction_type == "Cr") {
-        result.created_payments[`${id}#${name}`].total_paid =
-          (result.created_payments?.[`${id}#${name}`]?.total_paid ?? 0) +
+        result.created_payments[`${id}#${name}`].total_spent =
+          (result.created_payments?.[`${id}#${name}`]?.total_spent ?? 0) +
           parseFloat(tr.amount);
-        result.created_payments[`${id}#${name}`].spend_on_self=
-          (result.created_payments?.[`${id}#${name}`]?.spend_on_self ?? 0) + parseFloat(tr.amount);
+        result.created_payments[`${id}#${name}`].spent_on_self=
+          (result.created_payments?.[`${id}#${name}`]?.spent_on_self ?? 0) + parseFloat(tr.amount);
       } else if (transaction_type == "Dr") {
-        result.created_payments[`${id}#${name}`].spend_on_self=
-        (result.created_payments?.[`${id}#${name}`]?.spend_on_self ?? 0)  - shared_amount;
+        result.created_payments[`${id}#${name}`].spent_on_self=
+        (result.created_payments?.[`${id}#${name}`]?.spent_on_self ?? 0)  - shared_amount;
         // to send calculation
         const from_to = `${id}#${name}-to-${payer_id}#${payer_name}`;
         const to_from = `${payer_id}#${payer_name}-to-${id}#${name}`;
